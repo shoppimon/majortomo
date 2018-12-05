@@ -26,7 +26,7 @@ setup(
     description='Majortomo - ZMQ MDP 0.2 (Majordomo) Python Implementation',
     author='Shahar Evron',
     author_email='shahar@shoppimon.com',
-    url='https://github.com/shoppimon/instellator',
+    url='https://github.com/shoppimon/majortomo',
     packages=find_packages(),
     long_description=long_desc,
     long_description_content_type='text/markdown',

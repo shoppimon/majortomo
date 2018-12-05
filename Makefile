@@ -10,7 +10,7 @@ MYPY_FLAG := '--mypy'
 
 test:
 	$(PIP) install -r requirements-test.txt -e .
-	$(PYTEST) --flake8 --isort $(MYPY_FLAG) tests shoppimon_instellator
+	$(PYTEST) --flake8 --isort $(MYPY_FLAG) majortomo tests
 
 wheel:
 	$(PYTHON) setup.py bdist_wheel --universal

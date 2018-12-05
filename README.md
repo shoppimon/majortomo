@@ -27,7 +27,7 @@ You can run the broker with `--help` for more command line options.
 
 Of course, you can also run the broker directly using Python 3.5 and up:
 
-    $ python -m shoppimon_instellator.zmq_mdp.broker --help
+    $ python -m majortomo.broker --help
 
 Note that this requires setting up a virtual environemnt with the project 
 dependencies, which is described below. 
@@ -110,7 +110,7 @@ specify the number of seconds to wait for a response (a `float` is expected
 so you can specify second fractions as well). If no `timeout` is specified, 
 the function will wait forever. 
 
-Once `recv_*` times out, a `shoppimon_instellator.zmq_mdp.error.Timeout` will
+Once `recv_*` times out, a `majortomo.error.Timeout` will
 be raised. It is sometimes useful to catch this exception and retry the 
 operation after reconnecting to the broker:
 
@@ -122,7 +122,7 @@ while True:
             client.send(b'my-service', b'frame1', b'frame2')
             reply = client.recv_all_as_list(timeout=10.0)
             break
-        except shoppimon_instellator.zmq_mdp.error.Timeout:
+        except majortomo.error.Timeout:
             logging.warning("Timed out waiting for a reply from broker, reconnecting")
             time.sleep(1.0)
             continue
@@ -138,7 +138,7 @@ while True:
         client.send(b'my-service', b'frame1', b'frame2')
         reply = client.recv_all_as_list(timeout=10.0)
         break
-    except shoppimon_instellator.zmq_mdp.error.Timeout:
+    except majortomo.error.Timeout:
         logging.warning("Timed out waiting for a reply from broker, reconnecting")
         time.sleep(1.0)
         client.connect(reconnect=True)
@@ -150,7 +150,7 @@ between them using some kind of exponential backoff & retry library, for example
 [backoff](https://pypi.org/project/backoff/) or [redo](https://pypi.org/project/redo)
 
 #### Implementing MDP Workers
-See `shoppimon_instellator.zmq_mdp.echo` for a sample worker implementation
+See `majortomo.echo` for a sample worker implementation
 
 More details TBD
 
