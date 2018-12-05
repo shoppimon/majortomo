@@ -1,0 +1,4 @@
+figcan==0.0.*
+pyyaml==3.13.*
+pyzmq==17.1.*
+typing==3.6.*; python_version < '3.0'

@@ -1,0 +1,9 @@
+/.idea
+/.venv*
+/venv*
+*.pyc
+/.pytest_cache
+/.mypy_cache
+/build
+/dist
+*.egg-info
