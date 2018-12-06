@@ -16,8 +16,7 @@ matrix:
 
 install:
   - pip install --upgrade pip pip-tools
-  - pip-sync requirements.txt dev-requirements.txt
-  - pip install -e .
+  - make prepare-test
 
 script:
   - make test
