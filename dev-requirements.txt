@@ -36,6 +36,7 @@ pytz==2018.7              # via babel
 requests==2.20.1          # via sphinx
 six==1.11.0               # via more-itertools, packaging, pytest, sphinx
 snowballstemmer==1.2.1    # via sphinx
+sphinx-autodoc-typehints==1.5.2
 sphinx==1.8.2
 sphinxcontrib-websupport==1.1.0  # via sphinx
 typed-ast==1.1.0          # via mypy
