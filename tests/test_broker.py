@@ -16,8 +16,7 @@ import time
 
 from pytest import mark, raises
 
-from majortomo import broker
-from majortomo import error
+from majortomo import broker, error
 
 
 def test_broker_can_bind_again_after_close():

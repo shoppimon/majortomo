@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 class Error(RuntimeError):
     """Parent exception for all zmq_mdp errors
     """

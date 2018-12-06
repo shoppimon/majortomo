@@ -22,7 +22,8 @@ from typing import Generator, Iterable, List, Optional, Tuple  # noqa: F401
 
 import zmq
 
-from majortomo import error, protocol as p
+from majortomo import error
+from majortomo import protocol as p
 
 DEFAULT_ZMQ_LINGER = 2500
 
