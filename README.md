@@ -10,6 +10,8 @@ service oriented messaging on top of [ZeroMQ](https://zeromq.org). It is very
 useful, for example, for facilitating communication between different
 micro-services in a scalable, robust and fault-tolerant manner. 
 
+[![Build Status](https://travis-ci.org/shoppimon/majortomo.svg?branch=master)](https://travis-ci.org/shoppimon/majortomo)
+
 Usage
 -----
 ### Running the Broker
