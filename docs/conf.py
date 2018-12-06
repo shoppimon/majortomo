@@ -20,11 +20,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'majortomo'
-copyright = '2018, Shahar Evron'
+copyright = '2018, Shoppimon LTD'
 author = 'Shahar Evron'
 
 # The short X.Y version
-version = ''
+version = '0.1'
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
 
