@@ -1,0 +1,23 @@
+language: python
+
+env:
+  - MYPY_FLAG="--mypy"
+
+matrix:
+  include:
+    - python: 2.7
+      env: MYPY_FLAG=""
+    - python: 3.4
+    - python: 3.5
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+install:
+  - pip install --upgrade pip pip-tools
+  - pip-sync requirements.txt dev-requirements.txt
+  - pip install -e .
+
+script:
+  - pytest --flake8 --isort $(MYPY_FLAG) majortomo tests
