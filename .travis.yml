@@ -19,4 +19,4 @@ install:
   - make prepare-test
 
 script:
-  - make test
+  - make test MYPY_FLAG=$MYPY_FLAG
