@@ -20,4 +20,4 @@ install:
   - pip install -e .
 
 script:
-  - pytest --flake8 --isort $(MYPY_FLAG) majortomo tests
+  - make test
