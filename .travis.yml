@@ -7,7 +7,6 @@ matrix:
   include:
     - python: 2.7
       env: MYPY_FLAG=""
-    - python: 3.4
     - python: 3.5
     - python: 3.6
     - python: 3.7
