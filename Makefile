@@ -17,7 +17,7 @@ MYPY_FLAG := '--mypy'
 	$(PIP_SYNC) requirements.txt dev-requirements.txt
 	$(PIP) freeze > $@
 
-prepare-test: .install-dev-requirements:
+prepare-test: .install-dev-requirements
 	$(PIP) install -e .
 
 test: prepare-test
