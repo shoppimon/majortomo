@@ -1,5 +1,8 @@
-"""Majordomo / [MDP/0.2](https://rfc.zeromq.org/spec:18/MDP/) broker implementation
+"""Majordomo / `MDP/0.2 <https://rfc.zeromq.org/spec:18/MDP/>`_ broker implementation.
+
+Typically, call :py:func:`.main` to run the broker process.
 """
+
 import argparse
 import logging
 import logging.config
@@ -245,7 +248,7 @@ class Broker:
 
 
 class Worker:
-    """A worker representation
+    """Worker objects represent a connected / known MDP worker process
     """
     def __init__(self, worker_id, service, expire_at, next_heartbeat):
         # type: (bytes, bytes, float, float) -> None
@@ -257,7 +260,7 @@ class Worker:
 
     def is_expired(self, now=None):
         # type: (Optional[float]) -> bool
-        """Tell if worker is expired
+        """Check if worker is expired
         """
         if now is None:
             now = time.time()
@@ -265,7 +268,7 @@ class Worker:
 
     def is_heartbeat(self, now=None):
         # type: (Optional[float]) -> bool
-        """Tell if worker is due for heartbeat
+        """Check if worker is due for sending a heartbeat message
         """
         if now is None:
             now = time.time()
@@ -273,9 +276,7 @@ class Worker:
 
 
 class Service:
-    """Service representation
-
-    A service object manages all workers that can handle a specific service, as well as a queue of messages
+    """Service objects manage all workers that can handle a specific service, as well as a queue of MDP Client
     requests to be handled by this service
     """
     def __init__(self):
@@ -284,18 +285,26 @@ class Service:
 
     def queue_request(self, client, request_body):
         # type: (bytes, List[bytes]) -> None
+        """Queue a client request
+        """
         self._queue.append((client, request_body))
 
     def add_worker(self, worker):
         # type: (Worker) -> None
+        """Add a Worker to the service
+        """
         self._workers[worker.id] = worker
 
     def remove_worker(self, worker_id):
         # type: (bytes) -> None
+        """Remove a worker from the service
+        """
         del self._workers[worker_id]
 
     def dequeue_pending(self):
         # type: () -> Generator[Tuple[List[bytes], Worker, bytes], None, None]
+        """Dequeue pending workers and requests to be handled by them
+        """
         while len(self._queue) and len(self._workers):
             client, message = self._queue.popleft()
             _, worker = self._workers.popitem(last=False)
@@ -304,11 +313,15 @@ class Service:
     @property
     def queued_requests(self):
         # type: () -> int
+        """Number of queued requests for this service
+        """
         return len(self._queue)
 
     @property
     def available_workers(self):
         # type: () -> int
+        """Number of available workers for this service
+        """
         return len(self._workers)
 
 
