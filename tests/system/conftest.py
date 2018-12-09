@@ -4,7 +4,6 @@ import logging
 import os
 import sys
 from contextlib import contextmanager
-from importlib import reload
 from multiprocessing import Process
 from subprocess import Popen
 from tempfile import mkstemp
@@ -14,6 +13,12 @@ import zmq
 
 from majortomo import Worker, WorkerRequestsIterator
 from majortomo.config import default_config
+
+try:
+    from importlib import reload
+except ImportError:
+    # Python 2.7 has 'reload' as a builtin function
+    pass
 
 HEARTBEAT_INTERVAL = 1.0
 HEARTBEAT_TIMEOUT = 3.0
@@ -45,7 +50,7 @@ def run_broker(bind):
         yield
     finally:
         broker_proc.terminate()
-        broker_proc.wait(timeout=3.0)
+        broker_proc.wait()
 
 
 @contextmanager
