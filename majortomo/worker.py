@@ -135,6 +135,7 @@ class Worker(object):
         if not self.is_connected():
             return
         self._socket.disconnect(self.broker_url)
+        self._socket.close()
         self._socket = None
         self._last_sent_message -= self.heartbeat_interval
 
@@ -150,7 +151,15 @@ class Worker(object):
 
             self._check_send_heartbeat()
             poll_timeout = self._get_poll_timeout()
-            socks = dict(self._poller.poll(timeout=poll_timeout))
+
+            try:
+                socks = dict(self._poller.poll(timeout=poll_timeout))
+            except zmq.error.ZMQError:
+                # Probably connection was explicitly closed
+                if self._socket is None:
+                    continue
+                raise
+
             if socks.get(self._socket) == zmq.POLLIN:
                 message = self._socket.recv_multipart()
                 self._log.debug("Got message of %d frames", len(message))
