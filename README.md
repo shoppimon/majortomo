@@ -11,6 +11,32 @@ useful, for example, for facilitating communication between different
 micro-services in a scalable, robust and fault-tolerant manner. 
 
 [![Build Status](https://travis-ci.org/shoppimon/majortomo.svg?branch=master)](https://travis-ci.org/shoppimon/majortomo)
+[![Documentation Status](https://readthedocs.org/projects/majortomo/badge/?version=latest)](https://majortomo.readthedocs.io/en/latest/?badge=latest)
+
+Installation
+------------
+The simplest way to install Majortomo is via `pip`:
+
+    $ pip install majortomo
+
+If you just want to run the MDP broker, for example if you already have MDP 
+workers and clients implemented in some other language / library, you can run
+simply run the Docker image without installing any Python packages:
+
+    # This doesn't actually work yet, but will at some point...
+    # $ docker run shoppimon/majortomo-broker:latest
+
+Quick Start
+-----------
+### Running the Broker
+
+### Exposing a Service using an MDP Worker
+
+### Consuming a Service using an MDP Client
+
+Full Documentation
+------------------
+Project documentation is available here: https://majortomo.readthedocs.io/en/latest/
 
 Usage
 -----

@@ -24,4 +24,5 @@ test: prepare-test
 	$(PYTEST) --flake8 --isort $(MYPY_FLAG) majortomo tests
 
 wheel:
+	$(PIP) install -U pip wheel twine
 	$(PYTHON) setup.py bdist_wheel --universal
