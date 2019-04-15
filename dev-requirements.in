@@ -3,4 +3,5 @@ pytest-flake8==1.0.*
 pytest-isort==0.2.*
 pytest-mypy==0.3.*; python_version >= '3.4'
 sphinx==1.8.*
-sphinx-autodoc-typehints==1.5.*
+jinja2>=2.10.1  # needed by Sphinx
+sphinx-autodoc-typehints==1.6.*
