@@ -72,13 +72,13 @@ def run_worker(connect, service_name='my-service', handler_func=lambda r: r, sen
         worker_iter.stop_on_signal()
 
         for request in worker_iter:
-                response = list(handler_func(request))
-                if send_partials and len(response) > 1:
-                    partials = response[0:-1]
-                    final = response[-1]
-                    worker_iter.send_reply_from_iterable(partials, final=final)
-                else:
-                    worker_iter.send_reply_final(response)
+            response = list(handler_func(request))
+            if send_partials and len(response) > 1:
+                partials = response[0:-1]
+                final = response[-1]
+                worker_iter.send_reply_from_iterable(partials, final=final)
+            else:
+                worker_iter.send_reply_final(response)
 
         logging.debug("Stopping worker process for service %s", service_name)
 
