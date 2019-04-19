@@ -7,17 +7,21 @@ PIP_SYNC := pip-sync
 PIP_COMPILE := pip-compile
 PYTHON := python
 PYTEST := pytest
+PYTHON_VERSION := $(shell $(PYTHON) -c 'import sys; print(sys.version_info[0])')
+MYPY_FLAG := $(shell [[ -n "`$(PIP) freeze | grep mypy`" ]] && echo '--mypy')
 
-MYPY_FLAG := '--mypy'
 
-%.txt: %.in
+requirements.txt: requirements.in
 	$(PIP_COMPILE) --no-index --output-file $@ $<
 
-.install-dev-requirements: requirements.txt dev-requirements.txt
-	$(PIP_SYNC) requirements.txt dev-requirements.txt
+dev-requirements%.txt: dev-requirements.in
+	$(PIP_COMPILE) --no-index --output-file $@ $<
+
+.install-dev-requirements%: requirements.txt dev-requirements-py$(PYTHON_VERSION).txt
+	$(PIP_SYNC) requirements.txt dev-requirements-py$(PYTHON_VERSION).txt
 	$(PIP) freeze > $@
 
-prepare-test: .install-dev-requirements
+prepare-test: .install-dev-requirements-py$(PYTHON_VERSION)
 	$(PIP) install -e .
 
 test: prepare-test
