@@ -24,6 +24,7 @@ import zmq
 
 from majortomo import error
 from majortomo import protocol as p
+from majortomo.util import TextOrBytes, text_to_ascii_bytes
 
 DEFAULT_ZMQ_LINGER = 2500
 
@@ -34,9 +35,9 @@ class Worker(object):
 
     def __init__(self, broker_url, service_name, heartbeat_interval=p.DEFAULT_HEARTBEAT_INTERVAL,
                  heartbeat_timeout=p.DEFAULT_HEARTBEAT_TIMEOUT, zmq_context=None, zmq_linger=DEFAULT_ZMQ_LINGER):
-        # type: (str, str, float, float, Optional[zmq.Context], int) -> None
+        # type: (str, TextOrBytes, float, float, Optional[zmq.Context], int) -> None
         self.broker_url = broker_url
-        self.service_name = service_name.encode('ascii')
+        self.service_name = text_to_ascii_bytes(service_name)
         self.heartbeat_interval = heartbeat_interval
 
         self._socket = None  # type: zmq.Socket
