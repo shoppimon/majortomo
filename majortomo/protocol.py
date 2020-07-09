@@ -44,10 +44,10 @@ class Message(object):
     def __init__(self, client, header, command, message=None):
         # type: (bytes, bytes, bytes, Optional[List[bytes]]) -> None
         if header not in self.ALLOWED_HEADERS:
-            raise error.ProtocolError("Unexpected protocol header: {}".format(header))
+            raise error.ProtocolError("Unexpected protocol header: {}".format(header.decode('utf8')))
 
         if command not in self.ALLOWED_COMMANDS[header]:
-            raise error.ProtocolError("Unexpected command: {}".format(command))
+            raise error.ProtocolError("Unexpected command: {}".format(command.decode('utf8')))
 
         if message is None:
             message = []

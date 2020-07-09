@@ -152,11 +152,11 @@ class Client(object):
         if message[0] != p.CLIENT_HEADER:
             print(message)
             raise e.ProtocolError("Unexpected protocol header [{}], expecting [{}]".format(
-                message[0], p.WORKER_HEADER))
+                message[0].decode('utf8'), p.WORKER_HEADER.decode('utf8')))
 
         if message[1] not in {p.PARTIAL, p.FINAL}:
             raise e.ProtocolError("Unexpected message type [{}], expecting either PARTIAL or FINAL".format(
-                message[1]))
+                message[1].decode('utf8')))
 
         return message[1], message[2:]
 
