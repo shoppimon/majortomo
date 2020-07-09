@@ -24,6 +24,7 @@ import zmq
 
 from majortomo import error
 from majortomo import protocol as p
+from majortomo.util import TextOrBytes, text_to_ascii_bytes
 
 DEFAULT_ZMQ_LINGER = 2500
 
@@ -34,9 +35,9 @@ class Worker(object):
 
     def __init__(self, broker_url, service_name, heartbeat_interval=p.DEFAULT_HEARTBEAT_INTERVAL,
                  heartbeat_timeout=p.DEFAULT_HEARTBEAT_TIMEOUT, zmq_context=None, zmq_linger=DEFAULT_ZMQ_LINGER):
-        # type: (str, str, float, float, Optional[zmq.Context], int) -> None
+        # type: (str, TextOrBytes, float, float, Optional[zmq.Context], int) -> None
         self.broker_url = broker_url
-        self.service_name = service_name.encode('ascii')
+        self.service_name = text_to_ascii_bytes(service_name)
         self.heartbeat_interval = heartbeat_interval
 
         self._socket = None  # type: zmq.Socket
@@ -81,7 +82,7 @@ class Worker(object):
             raise error.Disconnected("Disconnected on message from broker")
 
         elif command != p.REQUEST:
-            raise error.ProtocolError("Unexpected message type from broker: {}".format(command))
+            raise error.ProtocolError("Unexpected message type from broker: {}".format(command.decode('utf8')))
 
         if len(frames) < 3:
             raise error.ProtocolError("Unexpected REQUEST message size, got {} frames, expecting at least 3".format(
@@ -219,11 +220,11 @@ class Worker(object):
         if message[0] != p.WORKER_HEADER:
             print(message)
             raise error.ProtocolError("Unexpected protocol header [{}], expecting [{}]".format(
-                message[0], p.WORKER_HEADER))
+                message[0].decode('utf8'), p.WORKER_HEADER.decode('utf8')))
 
         if message[1] not in {p.DISCONNECT, p.HEARTBEAT, p.REQUEST}:
             raise error.ProtocolError("Unexpected message type [{}], expecting either HEARTBEAT, REQUEST or "
-                                      "DISCONNECT".format(message[1]))
+                                      "DISCONNECT".format(message[1].decode('utf8')))
 
         return message[1], message[2:]
 

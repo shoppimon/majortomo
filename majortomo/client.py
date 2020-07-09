@@ -22,6 +22,7 @@ import zmq
 
 from . import error as e
 from . import protocol as p
+from .util import TextOrBytes, text_to_ascii_bytes
 
 DEFAULT_ZMQ_LINGER = 2000
 
@@ -76,7 +77,7 @@ class Client(object):
         return self._socket is not None
 
     def send(self, service, *args):
-        # type: (bytes, *bytes) -> None
+        # type: (TextOrBytes, *bytes) -> None
         """Send a REQUEST command to the broker to be passed to the given service.
 
         Each additional argument will be sent as a request body frame.
@@ -84,6 +85,7 @@ class Client(object):
         if self._expect_reply:
             raise e.StateError("Still expecting reply from broker, cannot send new request")
 
+        service = text_to_ascii_bytes(service)
         self._log.debug("Sending REQUEST message to %s with %d frames in body", service, len(args))
         self._socket.send_multipart((b'', p.CLIENT_HEADER, p.REQUEST, service) + args)
         self._expect_reply = True
@@ -150,11 +152,11 @@ class Client(object):
         if message[0] != p.CLIENT_HEADER:
             print(message)
             raise e.ProtocolError("Unexpected protocol header [{}], expecting [{}]".format(
-                message[0], p.WORKER_HEADER))
+                message[0].decode('utf8'), p.WORKER_HEADER.decode('utf8')))
 
         if message[1] not in {p.PARTIAL, p.FINAL}:
             raise e.ProtocolError("Unexpected message type [{}], expecting either PARTIAL or FINAL".format(
-                message[1]))
+                message[1].decode('utf8')))
 
         return message[1], message[2:]
 

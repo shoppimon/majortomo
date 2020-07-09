@@ -112,7 +112,7 @@ class Broker:
         elif message.header == protocol.CLIENT_HEADER:
             self._handle_client_message(message)
         else:
-            raise error.ProtocolError("Unexpected protocol header: {}".format(message.header))
+            raise error.ProtocolError("Unexpected protocol header: {}".format(message.header.decode('utf8')))
 
         self._dispatch_queued_messages()
 
@@ -132,7 +132,7 @@ class Broker:
             self._handle_worker_disconnect(message.client)
         else:
             self._send_to_worker(message.client, protocol.DISCONNECT)
-            raise error.ProtocolError("Unexpected command from worker: {}".format(message.command))
+            raise error.ProtocolError("Unexpected command from worker: {}".format(message.command.decode('utf8')))
 
     def _handle_worker_heartbeat(self, worker_id):
         # type: (bytes) -> None
@@ -360,7 +360,7 @@ class ServicesContainer:
         """Add a worker to the list of available workers
         """
         if worker_id in self._workers:
-            raise error.StateError("Worker '{}' has already sent READY message".format(worker_id))
+            raise error.StateError("Worker '{}' has already sent READY message".format(worker_id.decode('utf8')))
         worker = Worker(worker_id, service, expire_at, next_heartbeat)
         self._workers[worker_id] = worker
         self._services[service].add_worker(worker)
@@ -410,7 +410,7 @@ class ServicesContainer:
             try:
                 del self._busy_workers[worker_id]
             except KeyError:
-                raise error.StateError("Worker id {} is not known".format(worker_id))
+                raise error.StateError("Worker id {} is not known".format(worker_id.decode('utf8')))
 
     def heartbeat_workers(self):
         # type: () -> Generator[Worker, None, None]
