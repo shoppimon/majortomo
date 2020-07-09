@@ -12,6 +12,7 @@ micro-services in a scalable, robust and fault-tolerant manner.
 
 [![Build Status](https://travis-ci.org/shoppimon/majortomo.svg?branch=master)](https://travis-ci.org/shoppimon/majortomo)
 [![Documentation Status](https://readthedocs.org/projects/majortomo/badge/?version=latest)](https://majortomo.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/majortomo.svg)](https://badge.fury.io/py/majortomo)
 
 Installation
 ------------
