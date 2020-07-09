@@ -12,6 +12,6 @@ def text_to_ascii_bytes(text):
 
     If the input is already `bytes`, we simply return it as is
     """
-    if hasattr('encode', text):
+    if hasattr(text, 'encode'):
         return text.encode('ascii')
     return text
