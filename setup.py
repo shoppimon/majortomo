@@ -41,4 +41,8 @@ setup(
     test_require=[
         'pytest',
     ],
+    include_package_data=True,
+    package_data={
+        'majortomo': ['py.typed']
+    }
 )
